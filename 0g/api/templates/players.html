@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if category == 'current' %}Current Squad
+{% elif category == 'legend' %}Club Legends
+{% else %}Transfer Market
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="mb-8">
+    <h1 class="text-5xl font-bold mb-4
+        {% if category == 'current' %}text-arsenal
+        {% elif category == 'legend' %}text-arsenalGold
+        {% else %}text-green-600
+        {% endif %}">
+        {% if category == 'current' %}⚽ Current Squad
+        {% elif category == 'legend' %}🏆 Club Legends
+        {% else %}🎯 Transfer Market
+        {% endif %}
+    </h1>
+    <p class="text-gray-600 text-lg">
+        {% if category == 'current' %}Arsenal's first-team players with AI-powered analysis
+        {% elif category == 'legend' %}Honoring the greats who built Arsenal's legacy
+        {% else %}Available targets analyzed by 0G Compute AI
+        {% endif %}
+    </p>
+</div>
+
+<!-- Budget Tracker (only for transfers) -->
+{% if category == 'transfer' %}
+<div class="bg-green-50 border-2 border-green-500 rounded-xl p-6 mb-8">
+    <div class="flex items-center justify-between">
+        <div>
+            <h3 class="text-xl font-bold text-green-800 mb-2">💰 Transfer Budget</h3>
+            <div class="text-3xl font-bold text-green-600">{{ budget.remaining }}</div>
+            <div class="text-sm text-gray-600">of {{ budget.total }} available</div>
+        </div>
+        <div class="text-right">
+            <div class="text-sm text-gray-600 mb-1">Spent</div>
+            <div class="text-2xl font-bold text-gray-800">{{ budget.spent }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Position Filters -->
+<div class="mb-8">
+    <div class="flex items-center space-x-3 flex-wrap gap-2">
+        <span class="text-gray-700 font-semibold">Filter by Position:</span>
+        <button onclick="filterPlayers('ALL')" class="filter-btn bg-gray-200 hover:bg-arsenal hover:text-white px-4 py-2 rounded-lg font-semibold transition">
+            ALL
+        </button>
+        <button onclick="filterPlayers('GK')" class="filter-btn bg-gray-200 hover:bg-arsenal hover:text-white px-4 py-2 rounded-lg font-semibold transition">
+            GK
+        </button>
+        <button onclick="filterPlayers('CB')" class="filter-btn bg-gray-200 hover:bg-arsenal hover:text-white px-4 py-2 rounded-lg font-semibold transition">
+            DEF
+        </button>
+        <button onclick="filterPlayers('CDM')" class="filter-btn bg-gray-200 hover:bg-arsenal hover:text-white px-4 py-2 rounded-lg font-semibold transition">
+            MID
+        </button>
+        <button onclick="filterPlayers('ST')" class="filter-btn bg-gray-200 hover:bg-arsenal hover:text-white px-4 py-2 rounded-lg font-semibold transition">
+            FWD
+        </button>
+    </div>
+</div>
+
+<!-- Players Grid -->
+<div id="playersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for player in players %}
+    <div class="player-card bg-white rounded-xl shadow-lg overflow-hidden hover-lift" data-position="{{ player.position }}">
+        <div class="{% if category == 'legend' %}arsenal-gradient{% else %}bg-gradient-to-r from-arsenal to-arsenalNavy{% endif %} text-white p-4">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold mb-1">{{ player.name }}</h3>
+                    <div class="text-sm opacity-90">{{ player.position }} • {{ player.age }} {% if category != 'legend' %}years{% endif %}</div>
+                </div>
+                <div class="rating-{% if player.overall >= 90 %}{% if category == 'legend' %}legend{% else %}gold{% endif %}{% elif player.overall >= 85 %}green{% else %}blue{% endif %}">
+                    {{ player.overall }}
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ player.bio }}</p>
+
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">Value</div>
+                    <div class="text-2xl font-bold text-arsenal">{{ player.value }}</div>
+                </div>
+                {% if category == 'legend' %}
+                <div class="text-4xl">🏆</div>
+                {% endif %}
+            </div>
+
+            <div class="space-y-2">
+                {% if category != 'legend' %}
+                <button onclick="analyzePlayer({{ player.id }}, '{{ player.name }}')"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-bold transition">
+                    🤖 Analyze with AI
+                </button>
+                {% endif %}
+
+                {% if category == 'transfer' %}
+                <button onclick="signPlayer({{ player.id }}, '{{ player.name }}', '{{ player.value }}')"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-bold transition">
+                    ✍️ Sign Player
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- AI Analysis Modal -->
+<div id="analysisModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center z-50" onclick="closeModal()">
+    <div class="bg-white rounded-2xl p-8 max-w-2xl mx-4 shadow-2xl" onclick="event.stopPropagation()">
+        <div class="flex items-start justify-between mb-6">
+            <div>
+                <h2 class="text-3xl font-bold text-arsenal mb-2">AI Scout Report</h2>
+                <p class="text-gray-600" id="analysisPlayerName">Loading...</p>
+            </div>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-3xl">×</button>
+        </div>
+
+        <div id="analysisContent" class="text-gray-700 leading-relaxed">
+            <div class="flex items-center justify-center py-12">
+                <div class="animate-spin text-6xl">⚽</div>
+            </div>
+            <p class="text-center text-gray-500">Analyzing player with 0G Compute AI...</p>
+        </div>
+
+        <div class="mt-6 pt-6 border-t text-center">
+            <p class="text-sm text-gray-500">Powered by 0G Decentralized Compute</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let allPlayers = document.querySelectorAll('.player-card');
+
+    function filterPlayers(position) {
+        const positionMap = {
+            'ALL': ['GK', 'CB', 'RB', 'LB', 'CDM', 'CM', 'CAM', 'RW', 'LW', 'ST', 'Manager'],
+            'GK': ['GK'],
+            'CB': ['CB', 'RB', 'LB'],
+            'CDM': ['CDM', 'CM', 'CAM'],
+            'ST': ['RW', 'LW', 'ST']
+        };
+
+        const allowedPositions = positionMap[position] || [position];
+
+        allPlayers.forEach(card => {
+            const playerPosition = card.getAttribute('data-position');
+            if (allowedPositions.includes(playerPosition)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    async function analyzePlayer(playerId, playerName) {
+        const modal = document.getElementById('analysisModal');
+        const content = document.getElementById('analysisContent');
+        const nameElement = document.getElementById('analysisPlayerName');
+
+        nameElement.textContent = playerName;
+
+        // Show loading state
+        content.innerHTML = `
+            <div class="flex items-center justify-center py-12">
+                <div class="animate-spin text-6xl">⚽</div>
+            </div>
+            <p class="text-center text-gray-500">Analyzing player with 0G Compute AI...</p>
+        `;
+
+        modal.classList.remove('hidden');
+
+        try {
+            const response = await fetch(`/analyze/${playerId}`);
+            const data = await response.json();
+
+            if (data.success) {
+                content.innerHTML = `
+                    <div class="prose max-w-none">
+                        <div class="bg-gray-50 rounded-lg p-6 mb-4">
+                            <pre class="whitespace-pre-wrap font-sans text-gray-700">${data.analysis}</pre>
+                        </div>
+                        <div class="text-sm text-center text-gray-500 mt-4">
+                            Analysis powered by ${data.powered_by}
+                        </div>
+                    </div>
+                `;
+            } else {
+                content.innerHTML = `
+                    <div class="bg-red-50 border-2 border-red-300 rounded-lg p-6 text-red-700">
+                        <p class="font-bold mb-2">⚠️ Analysis Failed</p>
+                        <p class="text-sm">${data.error}</p>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            content.innerHTML = `
+                <div class="bg-red-50 border-2 border-red-300 rounded-lg p-6 text-red-700">
+                    <p class="font-bold mb-2">⚠️ Connection Error</p>
+                    <p class="text-sm">${error.message}</p>
+                </div>
+            `;
+        }
+    }
+
+    function signPlayer(playerId, playerName, value) {
+        // Fire confetti!
+        fireConfetti();
+
+        // Show toast notification
+        showToast(
+            '🎉 Player Signed!',
+            `Transaction submitted to 0G Compute for ${playerName}`,
+            4000
+        );
+
+        // Simulate blockchain transaction
+        setTimeout(() => {
+            showToast(
+                '✅ Transfer Complete',
+                `${playerName} (${value}) successfully added to your squad!`,
+                4000
+            );
+        }, 2000);
+    }
+
+    function closeModal() {
+        document.getElementById('analysisModal').classList.add('hidden');
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+</script>
+{% endblock %}

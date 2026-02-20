@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}Arsenal FC Scout AI - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="arsenal-gradient text-white rounded-3xl p-12 mb-12 shadow-2xl">
+    <div class="text-center">
+        <h1 class="text-6xl font-bold mb-4">Arsenal FC Scout AI</h1>
+        <p class="text-2xl mb-2 text-white/90">Powered by 0G Compute Decentralized Intelligence</p>
+        <p class="text-lg text-white/70">Next-generation player analysis using blockchain AI</p>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+    <div class="bg-white rounded-xl p-6 shadow-lg hover-lift">
+        <div class="text-4xl mb-2">⚽</div>
+        <div class="text-3xl font-bold text-arsenal">{{ stats.total_players }}</div>
+        <div class="text-gray-600">Total Players</div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-lg hover-lift">
+        <div class="text-4xl mb-2">👥</div>
+        <div class="text-3xl font-bold text-green-600">{{ stats.current_squad }}</div>
+        <div class="text-gray-600">Current Squad</div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-lg hover-lift">
+        <div class="text-4xl mb-2">🏆</div>
+        <div class="text-3xl font-bold text-arsenalGold">{{ stats.legends }}</div>
+        <div class="text-gray-600">Club Legends</div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-lg hover-lift">
+        <div class="text-4xl mb-2">💰</div>
+        <div class="text-3xl font-bold text-blue-600">{{ stats.budget.remaining }}</div>
+        <div class="text-gray-600">Budget Available</div>
+    </div>
+</div>
+
+<!-- AI Recommendations Section -->
+<div class="bg-gradient-to-r from-arsenalNavy to-arsenal text-white rounded-2xl p-8 mb-12 shadow-2xl">
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-3xl font-bold mb-2">🤖 AI Scout Recommendations</h2>
+            <p class="text-white/80">Based on Arsenal's squad gaps and tactical needs</p>
+        </div>
+        <div class="animate-pulse-slow">
+            <div class="bg-white/20 px-4 py-2 rounded-full text-sm font-semibold">
+                Powered by 0G AI
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for player in recommendations %}
+        <div class="bg-white/10 backdrop-blur rounded-xl p-6 hover-lift border-2 border-arsenalGold/50">
+            <div class="flex items-start justify-between mb-3">
+                <div>
+                    <div class="text-sm text-arsenalGold font-bold mb-1">#{{ loop.index }} Priority</div>
+                    <h3 class="text-xl font-bold">{{ player.name }}</h3>
+                    <div class="text-sm text-white/70">{{ player.position }} • {{ player.age }} years</div>
+                </div>
+                <div class="rating-{% if player.overall >= 90 %}gold{% elif player.overall >= 85 %}green{% else %}blue{% endif %}">
+                    {{ player.overall }}
+                </div>
+            </div>
+
+            <p class="text-sm text-white/90 mb-4">{{ player.bio }}</p>
+
+            <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-arsenalGold">{{ player.value }}</span>
+                <a href="/players/transfer" class="bg-arsenalGold text-arsenalNavy px-4 py-2 rounded-lg font-bold hover:bg-yellow-500 transition">
+                    View Profile
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-6 text-center">
+        <p class="text-sm text-white/60">
+            AI analysis considers: Tactical fit, squad depth, market value, age profile, and Arsenal's playing style
+        </p>
+    </div>
+</div>
+
+<!-- Navigation Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Current Squad -->
+    <a href="/players/current" class="block group">
+        <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift h-full">
+            <div class="text-6xl mb-4">⚽</div>
+            <h2 class="text-3xl font-bold text-arsenal mb-3 group-hover:text-arsenalGold transition">Current Squad</h2>
+            <p class="text-gray-600 mb-4">View and analyze our {{ stats.current_squad }} first-team players</p>
+            <div class="inline-block bg-arsenal text-white px-6 py-3 rounded-lg font-bold group-hover:bg-arsenalNavy transition">
+                Explore Squad →
+            </div>
+        </div>
+    </a>
+
+    <!-- Club Legends -->
+    <a href="/players/legend" class="block group">
+        <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift h-full">
+            <div class="text-6xl mb-4">🏆</div>
+            <h2 class="text-3xl font-bold text-arsenalGold mb-3 group-hover:text-arsenal transition">Club Legends</h2>
+            <p class="text-gray-600 mb-4">Honor {{ stats.legends }} Arsenal greats who built our legacy</p>
+            <div class="inline-block bg-arsenalGold text-arsenalNavy px-6 py-3 rounded-lg font-bold group-hover:bg-arsenal group-hover:text-white transition">
+                Hall of Fame →
+            </div>
+        </div>
+    </a>
+
+    <!-- Transfer Market -->
+    <a href="/players/transfer" class="block group">
+        <div class="bg-white rounded-2xl p-8 shadow-lg hover-lift h-full">
+            <div class="text-6xl mb-4">🎯</div>
+            <h2 class="text-3xl font-bold text-green-600 mb-3 group-hover:text-arsenal transition">Transfer Market</h2>
+            <p class="text-gray-600 mb-4">Scout {{ stats.transfers }} available targets with AI analysis</p>
+            <div class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-bold group-hover:bg-arsenal transition">
+                Browse Targets →
+            </div>
+        </div>
+    </a>
+</div>
+
+<!-- Features Banner -->
+<div class="mt-12 bg-arsenalNavy text-white rounded-2xl p-8 text-center">
+    <h3 class="text-2xl font-bold mb-4">🚀 Powered by 0G Decentralized Compute</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div>
+            <div class="text-3xl mb-2">⚡</div>
+            <div class="font-bold mb-1">Lightning Fast</div>
+            <div class="text-white/70">50-100ms inference latency</div>
+        </div>
+        <div>
+            <div class="text-3xl mb-2">🔒</div>
+            <div class="font-bold mb-1">Secure & Private</div>
+            <div class="text-white/70">TEE-powered computation</div>
+        </div>
+        <div>
+            <div class="text-3xl mb-2">💎</div>
+            <div class="font-bold mb-1">Cost Efficient</div>
+            <div class="text-white/70">90% cheaper than cloud AI</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

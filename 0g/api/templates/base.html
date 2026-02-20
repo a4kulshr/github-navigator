@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Arsenal FC Scout AI{% endblock %} | Powered by 0G</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Confetti for animations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        arsenal: '#EF0107',
+                        arsenalNavy: '#063672',
+                        arsenalGold: '#9C824A'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .arsenal-gradient {
+            background: linear-gradient(135deg, #EF0107 0%, #9C824A 100%);
+        }
+
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(239, 1, 7, 0.3);
+        }
+
+        .rating-badge {
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+
+        .rating-gold { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+        .rating-green { background: linear-gradient(135deg, #10B981, #059669); color: #fff; }
+        .rating-blue { background: linear-gradient(135deg, #3B82F6, #1D4ED8); color: #fff; }
+        .rating-legend { background: linear-gradient(135deg, #9C824A, #FFD700); color: #000; }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="arsenal-gradient text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <h1 class="text-3xl font-bold">⚽ Arsenal FC</h1>
+                    <span class="text-sm bg-white/20 px-3 py-1 rounded-full">Scout AI</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="/" class="hover:text-arsenalGold transition font-semibold">Home</a>
+                    <a href="/players/current" class="hover:text-arsenalGold transition font-semibold">Squad</a>
+                    <a href="/players/legend" class="hover:text-arsenalGold transition font-semibold">Legends</a>
+                    <a href="/players/transfer" class="hover:text-arsenalGold transition font-semibold">Transfers</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-arsenalNavy text-white py-6 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">Powered by <strong class="text-arsenalGold">0G Compute</strong> | Decentralized AI for the Beautiful Game</p>
+            <p class="text-xs mt-2 text-gray-400">Built for ETHDenver 2024 Hackathon</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="flex items-center space-x-3">
+            <span class="text-2xl">✅</span>
+            <div>
+                <p class="font-bold text-gray-800" id="toastTitle">Success!</p>
+                <p class="text-sm text-gray-600" id="toastMessage">Action completed</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global JavaScript -->
+    <script>
+        function showToast(title, message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastTitle').textContent = title;
+            document.getElementById('toastMessage').textContent = message;
+
+            toast.style.display = 'block';
+
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, duration);
+        }
+
+        function getRatingClass(overall) {
+            if (overall >= 90) return 'rating-gold';
+            if (overall >= 80) return 'rating-green';
+            return 'rating-blue';
+        }
+
+        function fireConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#EF0107', '#FFFFFF', '#9C824A']
+            });
+        }
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
