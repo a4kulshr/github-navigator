@@ -1,0 +1,249 @@
+{
+  "players": [
+    {
+      "id": 1,
+      "name": "David Raya",
+      "position": "GK",
+      "overall": 84,
+      "age": 28,
+      "value": "€35M",
+      "category": "current",
+      "bio": "Spanish goalkeeper with excellent distribution and shot-stopping ability"
+    },
+    {
+      "id": 2,
+      "name": "William Saliba",
+      "position": "CB",
+      "overall": 88,
+      "age": 23,
+      "value": "€80M",
+      "category": "current",
+      "bio": "Young defensive rock, exceptional ball-playing center back"
+    },
+    {
+      "id": 3,
+      "name": "Gabriel Magalhães",
+      "position": "CB",
+      "overall": 86,
+      "age": 26,
+      "value": "€65M",
+      "category": "current",
+      "bio": "Brazilian defender with aerial dominance and leadership qualities"
+    },
+    {
+      "id": 4,
+      "name": "Ben White",
+      "position": "RB",
+      "overall": 85,
+      "age": 26,
+      "value": "€55M",
+      "category": "current",
+      "bio": "Versatile defender, converted to right-back with great success"
+    },
+    {
+      "id": 5,
+      "name": "Oleksandr Zinchenko",
+      "position": "LB",
+      "overall": 83,
+      "age": 27,
+      "value": "€35M",
+      "category": "current",
+      "bio": "Inverted full-back with exceptional passing and midfield instincts"
+    },
+    {
+      "id": 6,
+      "name": "Declan Rice",
+      "position": "CDM",
+      "overall": 88,
+      "age": 25,
+      "value": "€120M",
+      "category": "current",
+      "bio": "Complete midfielder, dominant in duels and progressive passing"
+    },
+    {
+      "id": 7,
+      "name": "Martin Ødegaard",
+      "position": "CAM",
+      "overall": 89,
+      "age": 25,
+      "value": "€110M",
+      "category": "current",
+      "bio": "Arsenal captain, creative maestro with elite vision and technique"
+    },
+    {
+      "id": 8,
+      "name": "Bukayo Saka",
+      "position": "RW",
+      "overall": 89,
+      "age": 22,
+      "value": "€140M",
+      "category": "current",
+      "bio": "Electric winger, Arsenal's starboy with pace, creativity and end product"
+    },
+    {
+      "id": 9,
+      "name": "Gabriel Martinelli",
+      "position": "LW",
+      "overall": 86,
+      "age": 23,
+      "value": "€80M",
+      "category": "current",
+      "bio": "Brazilian speedster with direct running and clinical finishing"
+    },
+    {
+      "id": 10,
+      "name": "Kai Havertz",
+      "position": "ST",
+      "overall": 84,
+      "age": 25,
+      "value": "€70M",
+      "category": "current",
+      "bio": "Versatile forward with technical quality and intelligent movement"
+    },
+    {
+      "id": 11,
+      "name": "Gabriel Jesus",
+      "position": "ST",
+      "overall": 85,
+      "age": 27,
+      "value": "€65M",
+      "category": "current",
+      "bio": "Dynamic striker with exceptional pressing and link-up play"
+    },
+    {
+      "id": 101,
+      "name": "Thierry Henry",
+      "position": "ST",
+      "overall": 96,
+      "age": 47,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "Arsenal's greatest ever player. 228 goals, 4x Golden Boot, Invincibles hero (1999-2007)"
+    },
+    {
+      "id": 102,
+      "name": "Dennis Bergkamp",
+      "position": "CAM",
+      "overall": 95,
+      "age": 55,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "The Non-Flying Dutchman. Magical technique, 120 goals, redefined the playmaker role (1995-2006)"
+    },
+    {
+      "id": 103,
+      "name": "Patrick Vieira",
+      "position": "CDM",
+      "overall": 94,
+      "age": 48,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "Invincibles captain. Dominant midfielder, 3 Premier Leagues, 4 FA Cups (1996-2005)"
+    },
+    {
+      "id": 104,
+      "name": "Robert Pires",
+      "position": "LW",
+      "overall": 91,
+      "age": 51,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "French winger with silky skills. 2 Premier Leagues, key Invincible (2000-2006)"
+    },
+    {
+      "id": 105,
+      "name": "Tony Adams",
+      "position": "CB",
+      "overall": 93,
+      "age": 58,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "Mr. Arsenal. One-club legend, 4 league titles, defensive colossus (1983-2002)"
+    },
+    {
+      "id": 106,
+      "name": "Ian Wright",
+      "position": "ST",
+      "overall": 91,
+      "age": 61,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "Legendary striker. 185 goals, club record holder until Henry (1991-1998)"
+    },
+    {
+      "id": 107,
+      "name": "Arsène Wenger",
+      "position": "Manager",
+      "overall": 98,
+      "age": 75,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "Legendary manager. 3 Premier Leagues, 7 FA Cups, The Invincibles architect (1996-2018)"
+    },
+    {
+      "id": 108,
+      "name": "Liam Brady",
+      "position": "CM",
+      "overall": 90,
+      "age": 68,
+      "value": "Legend",
+      "category": "legend",
+      "bio": "Irish maestro. Creative midfielder, FA Cup winner, 70s icon (1973-1980)"
+    },
+    {
+      "id": 201,
+      "name": "Ivan Toney",
+      "position": "ST",
+      "overall": 84,
+      "age": 28,
+      "value": "€60M",
+      "category": "transfer",
+      "bio": "Brentford striker. Clinical finisher, 20+ goals last season, proven Premier League quality"
+    },
+    {
+      "id": 202,
+      "name": "Victor Osimhen",
+      "position": "ST",
+      "overall": 89,
+      "age": 25,
+      "value": "€110M",
+      "category": "transfer",
+      "bio": "Napoli superstar. Explosive pace, elite finishing, Serie A champion and top scorer"
+    },
+    {
+      "id": 203,
+      "name": "Martín Zubimendi",
+      "position": "CDM",
+      "overall": 85,
+      "age": 25,
+      "value": "€60M",
+      "category": "transfer",
+      "bio": "Real Sociedad anchor. Excellent ball retention, press resistant, perfect Arteta midfielder"
+    },
+    {
+      "id": 204,
+      "name": "Eberechi Eze",
+      "position": "CAM",
+      "overall": 83,
+      "age": 26,
+      "value": "€50M",
+      "category": "transfer",
+      "bio": "Crystal Palace playmaker. Dribbling wizard, creative spark, homegrown talent"
+    },
+    {
+      "id": 205,
+      "name": "Viktor Gyökeres",
+      "position": "ST",
+      "overall": 86,
+      "age": 26,
+      "value": "€70M",
+      "category": "transfer",
+      "bio": "Sporting CP sensation. 43 goals this season, physical striker with elite movement"
+    }
+  ],
+  "budget": {
+    "total": "€500M",
+    "spent": "€150M",
+    "remaining": "€350M"
+  }
+}
